@@ -119,7 +119,7 @@
   if (PRESENTER) {
     document.body.classList.add('presenter');
     const P = document.createElement('div'); P.id = 'presenter';
-    P.innerHTML = '<div class="p-head"><span class="p-title"></span><span class="p-steps"></span><span class="p-clock"></span></div><div class="p-notes"></div><div class="p-foot"><span class="p-next"></span><span class="p-help">→ / Space შემდეგი · ← წინა · ეს ფანჯარა მართავს პროექტორზე გახსნილ სლაიდებს</span></div>';
+    P.innerHTML = '<div class="p-head"><span class="p-title"></span><span class="p-steps"></span><span class="p-clock"></span></div><div class="p-notes"></div><div class="p-foot"><span class="p-next"></span><span class="p-help">→ შემდეგი · ← წინა · ეს ფანჯარა მართავს პროექტორზე გახსნილ სლაიდებს</span></div>';
     document.body.appendChild(P);
     setInterval(() => { const m = Math.floor((Date.now() - t0) / 60000); P.querySelector('.p-clock').textContent = `⏱ ${String(Math.floor(m / 60)).padStart(1, '0')}:${String(m % 60).padStart(2, '0')}`; }, 1000);
     try { bc.postMessage({ t: 'hello' }); } catch (e) {}
@@ -131,7 +131,7 @@
   }
   document.addEventListener('keydown', e => {
     if (PRESENTER) return;
-    if (e.key === 'p' || e.key === 'P') { window.open(location.pathname + '?presenter' + location.hash, 'presenter', 'width=1100,height=800'); return; }
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); window.open(location.pathname + '?presenter' + location.hash, 'presenter', 'width=1100,height=800'); return; }
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     const key = e.key;
     if (key === 'ArrowRight') { e.preventDefault(); e.shiftKey ? go(i + 1) : next(); }
